@@ -7,7 +7,7 @@
 
 ## 🧭 Navigera som användare
 
-- [ ]  När användaren lyckats logga in ska bankomaten fråga vad användaren vill göra. Det ska finnas fyra val:
+- [x]  När användaren lyckats logga in ska bankomaten fråga vad användaren vill göra. Det ska finnas fyra val:
     
 ```
     1. Se dina konton och saldo
@@ -16,7 +16,7 @@
     4. Logga ut
 ```
     
-- [ ]  Användaren ska kunna välja en av funktionerna ovan genom att skriva in en siffra.
+- [x]  Användaren ska kunna välja en av funktionerna ovan genom att skriva in en siffra.
 - [ ]  När en funktion har kört klart ska användaren få upp texten "Klicka enter för att komma till huvudmenyn". När användaren klickat enter kommer menyn upp igen.
 - [x]  Om användaren väljer "Logga ut" ska programmet inte stängas av. Användaren ska komma tillbaka till inloggningen igen.
 - [ ]  Om användaren skriver ett nummer som inte finns i menyn, eller något annat än ett nummer, ska systemet meddela att det är ett "ogiltigt val".
