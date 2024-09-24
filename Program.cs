@@ -9,11 +9,18 @@
             * name
             * pin 
             */
-            string[][] users = [["1", "Mickey", "1234"], ["2", "Donald Duck", "1234"], ["3", "Goofy", "1234"]];
-            string[][] ballances = [[users[0][0], "lönekonto", "1000"], [users[0][0], "sparkonto", "2000"], [users[1][0], "lönekonto", "3000"]];
+            string[][] users = [
+                [ "1", "Mickey", "1234" ],
+                [ "2", "Donald Duck", "1234" ],
+                [ "3", "Goofy", "1234" ]
+            ];
+            string[][] ballances = [
+                [ users[0][0], "lönekonto", "1000" ],
+                [ users[0][0], "sparkonto", "2000" ],
+                [ users[1][0], "lönekonto", "3000" ]
+            ];
 
             Console.WriteLine("Welcome to the Jos banken");
-            var t = ballances.Where(ballance => ballance[0] == "1");
             string[]? user = SignIn(users);
 
             /* Validates a user exist rest of the code */
@@ -23,6 +30,8 @@
             }
 
             Console.WriteLine($"Welcome {user[1]}");
+
+            user = SignOut(user);
         }
 
         private static string Ask(string question)
@@ -56,10 +65,18 @@
                 {
                     return user;
                 }
-                
+
                 Console.WriteLine("Wrong name or pin, try again");
             }
 
+            return user;
+        }
+        private static string[]? SignOut(string[]? user)
+        {
+            if (user == null)
+            {
+                return [];
+            }
             return user;
         }
     }
