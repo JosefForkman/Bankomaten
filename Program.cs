@@ -64,7 +64,13 @@
                 }
 
                 /* Finds the user */
-                user = users.ToList().Find(user => user[1] == name && int.Parse(user[2]) == pin);
+                for (int k = 0; k < users.GetLength(0); k++)
+                {
+                    if (users[k][1] == name && int.Parse(users[k][2]) == pin)
+                    {
+                        user = users[k];
+                    }
+                }
 
                 if (user != null)
                 {
