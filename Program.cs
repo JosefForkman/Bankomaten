@@ -32,6 +32,11 @@
             Console.WriteLine($"Welcome {user[1]}");
 
             user = SignOut(user);
+
+            if (user == null)
+            {
+                Console.WriteLine("You are now signed out");
+            }
         }
 
         private static string Ask(string question)
@@ -73,9 +78,9 @@
         }
         private static string[]? SignOut(string[]? user)
         {
-            if (user == null)
+            if (user != null)
             {
-                return [];
+                return null;
             }
             return user;
         }
