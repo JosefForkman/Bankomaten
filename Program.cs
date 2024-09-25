@@ -4,20 +4,22 @@
     {
         static void Main(string[] args)
         {
-            /* 
-            * user id
-            * name
-            * pin 
-            */
-            string[][] users = [
-                [ "1", "Mickey", "1234" ],
-                [ "2", "Donald Duck", "1234" ],
-                [ "3", "Goofy", "1234" ]
+            /*
+             * user id
+             * name
+             * pin
+             */
+            string[][] users =
+            [
+                ["1", "Mickey", "1234"],
+                ["2", "Donald Duck", "1234"],
+                ["3", "Goofy", "1234"]
             ];
-            string[][] ballances = [
-                [ users[0][0], "lönekonto", "1000" ],
-                [ users[0][0], "sparkonto", "2000" ],
-                [ users[1][0], "lönekonto", "3000" ]
+            string[][] ballances =
+            [
+                [users[0][0], "lönekonto", "1000"],
+                [users[0][0], "sparkonto", "2000"],
+                [users[1][0], "lönekonto", "3000"]
             ];
 
             Console.WriteLine("Welcome to the Jos banken");
@@ -31,7 +33,7 @@
 
             Console.WriteLine($"Welcome {user[1]}");
 
-            user = Menu(user);
+            user = Menu(users, user, false);
         }
 
         private static string Ask(string question)
@@ -39,6 +41,7 @@
             Console.WriteLine(question);
             return Console.ReadLine() ?? "";
         }
+
         /// <summary>
         /// Sign in the user.
         /// </summary>
@@ -46,6 +49,7 @@
         /// <returns>Returns a user if the user uses the correct credentials otherwise null.</returns>
         private static string[]? SignIn(string[][] users)
         {
+            Console.Clear();
             string[]? user = null;
 
             /* If the user is not found givs tow more trays */
@@ -77,12 +81,14 @@
 
             return user;
         }
+
         private static string[]? SignOut(string[]? user)
         {
             if (user != null)
             {
                 return null;
             }
+
             return user;
         }
 
@@ -91,17 +97,21 @@
         /// </summary>
         /// <param name="user"></param>
         /// <returns>The state of the current user.</returns>
-        private static string[]? Menu(string[]? user)
+        private static string[]? Menu(string[][] users, string[]? signInUser, bool needEnter = false)
         {
+            string[]? user = null;
+            Console.Clear();
             while (true)
             {
-                Console.WriteLine("Click enter to get to the main menu");
-                ConsoleKeyInfo key = Console.ReadKey(true);
-
-                if (key.Key == ConsoleKey.Enter)
+                ConsoleKey? key = null;
+                if (needEnter)
                 {
-                    Console.Clear();
+                    Console.WriteLine("Click enter to get to the main menu");
+                    key = Console.ReadKey(true).Key;
+                }
 
+                if (!needEnter || key == ConsoleKey.Enter)
+                {
                     Console.WriteLine("The menu\n\n");
 
                     Console.WriteLine("1. See your accounts and balance");
@@ -109,7 +119,8 @@
                     Console.WriteLine("3. Withdraw money");
                     Console.WriteLine("4. sign out");
                     int option;
-                    while (!int.TryParse(Ask("Choose a one of the options by write the number of the option"), out option))
+                    while (!int.TryParse(Ask("Choose a one of the options by write the number of the option"),
+                               out option))
                     {
                         Console.WriteLine("invalid choice");
                     }
@@ -127,12 +138,19 @@
                             break;
                         case 4:
                             Console.WriteLine("4. sign out");
-                            Menu(user);
+                            SignOut(signInUser);
+                            // Console.WriteLine(user[1]);
+                            user = SignIn(users);
                             break;
                         default:
                             Console.WriteLine("invalid choice");
                             break;
                     }
+                }
+
+                if (user != null)
+                {
+                    return user;
                 }
             }
         }
