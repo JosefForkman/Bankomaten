@@ -28,7 +28,7 @@
 - [ ]  Konton ska kunna ha både kronor och ören.
 - [ ]  Alla användare ska ha olika antal konton och alla ska ha minst ett konto.
 - [ ]  Varje konto ska ha ett namn, ex. "lönekonto" eller "sparkonto".
-- [ ]  Saldon för alla konton sätts vid starten av programmet (du ställer in en en summa som finns på varje konto i koden) så om programmet startas om återställs alla saldon.
+- [x]  Saldon för alla konton sätts vid starten av programmet (du ställer in en en summa som finns på varje konto i koden) så om programmet startas om återställs alla saldon.
 
 ## 🔁 Överföring mellan konton
 
