@@ -67,7 +67,7 @@
                     {
                         case 1:
                             menuNeedEnter = true;
-                            Console.WriteLine("See your accounts and balance");
+                            AccountsBalance(user, ballances);
                             break;
                         case 2:
                             menuNeedEnter = true;
@@ -88,7 +88,6 @@
                             break;
                     }
                 }
-                
             }
         }
 
@@ -146,6 +145,40 @@
             }
 
             return user;
+        }
+
+        private static void AccountsBalance(string[] user, string[][] ballances)
+        {
+            Console.Clear();
+
+            string[][]? userBallance = null;
+
+            for (int i = 0; i < ballances.GetLength(0); i++)
+            {
+                if (int.Parse(ballances[i][0]) == int.Parse(user[0]))
+                {
+                    if (userBallance != null)
+                    {
+                        userBallance[userBallance.GetLength(0)] = ballances[i];
+                    }
+                    else
+                    {
+                        
+                    }
+                }
+            }
+
+            if (userBallance != null)
+            {
+                foreach (var ballance in userBallance)
+                {
+                    Console.WriteLine($"Account {ballance[1]} balance: {ballance[2]}");
+                }
+            }
+            else
+            {
+                Console.WriteLine("Account does not exist");
+            }
         }
     }
 }
