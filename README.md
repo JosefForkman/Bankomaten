@@ -32,7 +32,7 @@
 
 ## 🔁 Överföring mellan konton
 
-- [ ]  Denna funktion ska köras när användaren navigerat in till alternativet "Överföring mellan konton".
+- [x]  Denna funktion ska köras när användaren navigerat in till alternativet "Överföring mellan konton".
 - [ ]  Användaren ska kunna välja ett konto att ta pengar från, ett konto att flytta pengarna till och sen en summa som ska flyttas mellan dessa.
 - [ ]  Denna summa ska sedan flyttas mellan dessa konton och efteråt ska användaren få se vilken summa som finns på de två konton som påverkades.
 
