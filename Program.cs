@@ -29,7 +29,7 @@
                 [users[0][0], "sparkonto", "8912.34", "kr"],
                 [users[1][0], "lönekonto", "1234.56", "kr"],
                 [users[1][0], "sparkonto", "7890.12", "kr"],
-                // [users[2][0], "sparkonto", "9876.43", "kr"],
+                [users[2][0], "sparkonto", "9876.43", "kr"],
                 [users[3][0], "lönekonto", "6543.21", "kr"],
                 [users[3][0], "sparkonto", "2109.87", "kr"],
                 [users[4][0], "lönekonto", "4321.09", "kr"],
