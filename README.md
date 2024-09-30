@@ -23,12 +23,12 @@
 
 ## 🔢 Se konton och saldo
 
-- [ ]  Denna funktion ska köras när användaren navigerat in till alternativet "Se dina konton och saldo".
-- [ ]  Användaren ska få en utskrift av de olika konton som användaren har och hur mycket pengar det finns på dessa.
-- [ ]  Konton ska kunna ha både kronor och ören.
-- [ ]  Alla användare ska ha olika antal konton och alla ska ha minst ett konto.
-- [ ]  Varje konto ska ha ett namn, ex. "lönekonto" eller "sparkonto".
-- [ ]  Saldon för alla konton sätts vid starten av programmet (du ställer in en en summa som finns på varje konto i koden) så om programmet startas om återställs alla saldon.
+- [x]  Denna funktion ska köras när användaren navigerat in till alternativet "Se dina konton och saldo".
+- [x]  Användaren ska få en utskrift av de olika konton som användaren har och hur mycket pengar det finns på dessa.
+- [x]  Konton ska kunna ha både kronor och ören.
+- [x]  Alla användare ska ha olika antal konton och alla ska ha minst ett konto.
+- [x]  Varje konto ska ha ett namn, ex. "lönekonto" eller "sparkonto".
+- [x]  Saldon för alla konton sätts vid starten av programmet (du ställer in en en summa som finns på varje konto i koden) så om programmet startas om återställs alla saldon.
 
 ## 🔁 Överföring mellan konton
 
@@ -55,3 +55,8 @@ Om du känner att du hinner och vill göra mer kommer här förslag på ytterlig
 - [ ]  Lägg till så att användaren kan göra överföringar till andra användare.
 - [ ]  Lägg till så att om användaren skriver fel pinkod tre gånger stängs inloggning för den användaren av i tre minuter istället för att programmet måste startas om.
 - [ ]  Lägg till så att saldon för alla konton för alla användare sparas mellan körningarna av programmet så att saldon inte återställs.
+
+## Extra exta utmaningar
+
+- [ ] Skapa en tabell som går att visa alla konton och saldon för specifik användare.
+- [ ] Skriv om menyn så den ser snyggare ut. [Youtube vidio](https://www.youtube.com/watch?v=YyD1MRJY0qI) 

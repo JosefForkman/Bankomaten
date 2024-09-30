@@ -13,18 +13,27 @@
             [
                 ["1", "Mickey", "1234"],
                 ["2", "Donald Duck", "1234"],
-                ["3", "Goofy", "1234"]
+                ["3", "Goofy", "1234"],
+                ["4", "Pluto", "1234"],
+                ["5", "Scar", "1234"]
             ];
             /*
              * user id
              * ballances type
              * amount
+             * valuta
              */
             string[][] ballances =
             [
-                [users[0][0], "lönekonto", "1000"],
-                [users[0][0], "sparkonto", "2000"],
-                [users[1][0], "lönekonto", "3000"]
+                [users[0][0], "lönekonto", "3456.78", "kr"],
+                [users[0][0], "sparkonto", "8912.34", "kr"],
+                [users[1][0], "lönekonto", "1234.56", "kr"],
+                [users[1][0], "sparkonto", "7890.12", "kr"],
+                [users[2][0], "sparkonto", "9876.43", "kr"],
+                [users[3][0], "lönekonto", "6543.21", "kr"],
+                [users[3][0], "sparkonto", "2109.87", "kr"],
+                [users[4][0], "lönekonto", "4321.09", "kr"],
+                [users[4][0], "sparkonto", "8765.43", "kr"]
             ];
             bool menuNeedEnter = false;
 
@@ -67,7 +76,10 @@
                     {
                         case 1:
                             menuNeedEnter = true;
-                            Console.WriteLine("See your accounts and balance");
+                            if (user != null)
+                            {
+                                AccountsBalance(user, ballances);
+                            }
                             break;
                         case 2:
                             menuNeedEnter = true;
@@ -80,7 +92,7 @@
                         case 4:
                             Console.WriteLine("sign out");
                             menuNeedEnter = false;
-                            user = SignOut(user);
+                            SignOut(user);
                             user = SignIn(users);
                             break;
                         default:
@@ -88,7 +100,6 @@
                             break;
                     }
                 }
-                
             }
         }
 
@@ -146,6 +157,33 @@
             }
 
             return user;
+        }
+
+        private static void AccountsBalance(string[] user, string[][] ballances)
+        {
+            Console.Clear();
+
+            string[][] userBallance = [];
+
+            for (int i = 0; i < ballances.GetLength(0); i++)
+            {
+                if (int.Parse(ballances[i][0]) == int.Parse(user[0]))
+                {
+                    Array.Resize(ref userBallance, userBallance.Length + 1);
+                    userBallance[userBallance.Length - 1] = ballances[i];
+                }
+            }
+
+            if (userBallance.Length == 0)
+            {
+                Console.WriteLine("Account does not exist");
+                return;
+            }
+
+            foreach (var ballance in userBallance)
+            {
+                Console.WriteLine($"Account {ballance[1]} balance: \u001b[33m{ballance[2]}{ballance[3]}\u001b[0m");
+            }
         }
     }
 }
