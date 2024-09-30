@@ -83,7 +83,10 @@
                             break;
                         case 2:
                             menuNeedEnter = true;
-                            Console.WriteLine("Transfer between accounts");
+                            if (user != null)
+                            {
+                                TransferBetweenAccounts(user, ballances);
+                            }
                             break;
                         case 3:
                             menuNeedEnter = true;
@@ -184,6 +187,11 @@
             {
                 Console.WriteLine($"Account {ballance[1]} balance: \u001b[33m{ballance[2]}{ballance[3]}\u001b[0m");
             }
+        }
+
+        private static void TransferBetweenAccounts(string[] user, string[][] ballances)
+        {
+            
         }
     }
 }
