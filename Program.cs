@@ -193,9 +193,10 @@
                 Console.WriteLine($"{i + 1} {userBallance[1]} with {userBallance[2]}{userBallance[3]}");
             }
             int transferFrom;
+            System.Console.WriteLine($"ballans leth : {userBallances.Length}");
             while (
-                    !int.TryParse(Ask("Chose a acount to transefer from. Only the coresponding number works"), out transferFrom)
-                    && userBallances.Length + 1 < transferFrom
+                !int.TryParse(Ask("Chose a acount to transefer from. Only the coresponding number works"), out transferFrom)
+                || userBallances.Length < transferFrom
                 )
             {
                 Console.WriteLine("You try to choose an account outside the given boundaries");
@@ -203,9 +204,9 @@
 
             int transferTo;
             while (
-                !int.TryParse(Ask("Chose a acount to transefer from. Only the coresponding number works"), out transferTo)
-                && userBallances.Length + 1 <= transferTo
-                && transferTo == transferFrom
+                !int.TryParse(Ask("Chose a acount to transefer to. Only the coresponding number works"), out transferTo)
+                || transferTo == transferFrom
+                || userBallances.Length + 1 < transferTo
                 )
             {
                 Console.WriteLine("You try to choose an account outside the given boundaries or the same as you the transfer from");
