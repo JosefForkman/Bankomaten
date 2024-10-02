@@ -193,7 +193,6 @@
                 Console.WriteLine($"{i + 1} {userBallance[1]} with {userBallance[2]}{userBallance[3]}");
             }
             int transferFrom;
-            System.Console.WriteLine($"ballans leth : {userBallances.Length}");
             while (
                 !int.TryParse(Ask("Chose a acount to transefer from. Only the coresponding number works"), out transferFrom)
                 || userBallances.Length < transferFrom
@@ -206,7 +205,7 @@
             while (
                 !int.TryParse(Ask("Chose a acount to transefer to. Only the coresponding number works"), out transferTo)
                 || transferTo == transferFrom
-                || userBallances.Length + 1 < transferTo
+                || userBallances.Length < transferTo
                 )
             {
                 Console.WriteLine("You try to choose an account outside the given boundaries or the same as you the transfer from");
@@ -217,6 +216,24 @@
 
                     Console.WriteLine($"{i + 1} {userBallance[1]} with {userBallance[2]}{userBallance[3]}");
                 }
+            }
+            double transferAmount;
+            while (!double.TryParse(Ask($"How mouth do you want to transefer betwine {userBallances[transferFrom][1]} and {userBallances[transferTo - 1][1]}"), out transferAmount) || double.Parse(userBallances[transferFrom - 1][2]) < transferAmount)
+            {
+                Console.WriteLine($"You can´t transfer more then {userBallances[transferFrom - 1][2]}");
+            }
+
+            Console.WriteLine($"You transfer {transferAmount}");
+
+            userBallances[transferFrom - 1][2] = (double.Parse(userBallances[transferFrom - 1][2]) - transferAmount).ToString("#.00");
+            userBallances[transferTo - 1][2] = (double.Parse(userBallances[transferTo - 1][2]) + transferAmount).ToString("#.00");
+            Console.WriteLine("the new ballans is");
+
+            for (int i = 0; i < userBallances.Length; i++)
+            {
+                var userBallance = userBallances[i];
+
+                Console.WriteLine($"{userBallance[1]} with {userBallance[2]}{userBallance[3]}");
             }
         }
 
