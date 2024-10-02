@@ -202,9 +202,14 @@
             }
 
             int transferTo;
+            while (
+                !int.TryParse(Ask("Chose a acount to transefer from. Only the coresponding number works"), out transferTo)
+                && userBallances.Length + 1 <= transferTo
+                && transferTo == transferFrom
+                )
             {
                 Console.WriteLine("You try to choose an account outside the given boundaries or the same as you the transfer from");
-                
+
                 for (int i = 0; i < userBallances.Length; i++)
                 {
                     var userBallance = userBallances[i];
