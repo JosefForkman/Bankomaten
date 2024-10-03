@@ -37,10 +37,10 @@
 - [x]  Denna summa ska sedan flyttas mellan dessa konton och efteråt ska användaren få se vilken summa som finns på de två konton som påverkades.
 
 ## ⏏️ Ta ut pengar
-- [ ]  Denna funktion ska köras när användaren navigerat in till alternativet "Ta ut pengar".
-- [ ]  Användaren ska kunna välja ett av sina konton samt en summa att ta ut.
-- [ ]  Efter detta måste användaren skriva in sin pinkod för att bekräfta att de vill ta ut pengar.
-- [ ]  Lägg till ett felmeddelande om användaren försöker ta ut mer pengar än vad som finns på kontot.
+- [x]  Denna funktion ska köras när användaren navigerat in till alternativet "Ta ut pengar".
+- [x]  Användaren ska kunna välja ett av sina konton samt en summa att ta ut.
+- [x]  Efter detta måste användaren skriva in sin pinkod för att bekräfta att de vill ta ut pengar.
+- [x]  Lägg till ett felmeddelande om användaren försöker ta ut mer pengar än vad som finns på kontot.
 - [ ]  Pengarna ska sedan tas bort från det konto som valdes.
 - [ ]  Sist av allt ska systemet skriva ut det nya saldot på det kontot.
 
@@ -98,3 +98,4 @@ Om du känner att du hinner och vill göra mer kommer här förslag på ytterlig
             return user;
         }
   ```
+- [ ] kompletera med flera kommentarer.
