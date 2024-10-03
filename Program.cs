@@ -1,4 +1,6 @@
-﻿namespace Bankomaten
+﻿using System.Globalization;
+
+namespace Bankomaten
 {
     class Program
     {
@@ -257,10 +259,68 @@
         {
             string[][] userBallances = GetUserBallance(user, ballances);
 
-            while (!int.TryParse(Ask("")))
+            for (int i = 0; i < userBallances.Length; i++)
             {
-                
+                var userBallance = userBallances[i];
+
+                Console.WriteLine($"{i + 1} {userBallance[1]} with {userBallance[2]}{userBallance[3]}");
             }
+
+            int transferFrom;
+            while (!int.TryParse(Ask("chose a acount to transfer from"), out transferFrom) || userBallances.Length < transferFrom || transferFrom < 1)
+            {
+                Console.WriteLine("You try to choose an account outside the given boundaries");
+                for (int i = 0; i < userBallances.Length; i++)
+                {
+                    var userBallance = userBallances[i];
+
+                    Console.WriteLine($"{i + 1} {userBallance[1]} with {userBallance[2]}{userBallance[3]}");
+                }
+            }
+
+            double transferAmount;
+            while (!double.TryParse(
+                       Ask(
+                           $"How mouth do you want to transefer from {userBallances[transferFrom - 1][1]}. You can´t tresfer more then {userBallances[transferFrom - 1][2]}{userBallances[transferFrom - 1][3]}"),
+                       out transferAmount)
+                   || double.Parse(userBallances[transferFrom - 1][2]) < transferAmount
+                  )
+            {
+                Console.WriteLine($"You can´t transfer more then {userBallances[transferFrom - 1][2]}");
+            }
+
+            /* If the user is not found givs tow more trays */
+            for (int i = 0; i < 3; i++)
+            {
+                int pin;
+                while (!int.TryParse(Ask("Write your pin to conferme the transaktion"), out pin))
+                {
+                    Console.WriteLine("Invalid pin, try again");
+                }
+
+                /* User enter wrong pin code and for-loop is not on last round */
+                if (int.Parse(user[2]) != pin && i != 2)
+                {
+                    Console.WriteLine("Wrong pin, try again");
+                    continue;
+                }
+
+                /* User enter wrong pin code and for-loop on last round */
+                if (int.Parse(user[2]) != pin && i == 2)
+                {
+                    return;
+                }
+
+                /* If the user enters the correct pin code */
+                break;
+            }
+
+            Console.WriteLine("whedraing the many");
+
+            userBallances[transferFrom - 1][2] =
+                (double.Parse(userBallances[transferFrom - 1][2]) - transferAmount).ToString();
+
+            Console.WriteLine($"The new value on the acount is {userBallances[transferFrom - 1][2]}{userBallances[transferFrom - 1][3]}");
         }
 
         /// <summary>
