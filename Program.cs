@@ -25,15 +25,15 @@
              */
             string[][] ballances =
             [
-                [users[0][0], "lönekonto", "3456.78", "kr"],
-                [users[0][0], "sparkonto", "8912.34", "kr"],
-                [users[1][0], "lönekonto", "1234.56", "kr"],
-                [users[1][0], "sparkonto", "7890.12", "kr"],
-                [users[2][0], "sparkonto", "9876.43", "kr"],
-                [users[3][0], "lönekonto", "6543.21", "kr"],
-                [users[3][0], "sparkonto", "2109.87", "kr"],
-                [users[4][0], "lönekonto", "4321.09", "kr"],
-                [users[4][0], "sparkonto", "8765.43", "kr"]
+                [users[0][0], "lönekonto", "3456,78", "kr"],
+                [users[0][0], "sparkonto", "8912,34", "kr"],
+                [users[1][0], "lönekonto", "1234,56", "kr"],
+                [users[1][0], "sparkonto", "7890,12", "kr"],
+                [users[2][0], "sparkonto", "9876,43", "kr"],
+                [users[3][0], "lönekonto", "6543,21", "kr"],
+                [users[3][0], "sparkonto", "2109,87", "kr"],
+                [users[4][0], "lönekonto", "4321,09", "kr"],
+                [users[4][0], "sparkonto", "8765,43", "kr"]
             ];
             bool menuNeedEnter = false;
 
@@ -130,6 +130,7 @@
                 while (!int.TryParse(Ask("What is your pin?"), out pin))
                 {
                     Console.WriteLine("Invalid pin, try again");
+                     
                 }
 
                 /* Finds the user */
@@ -218,7 +219,12 @@
                 }
             }
             double transferAmount;
-            while (!double.TryParse(Ask($"How mouth do you want to transefer betwine {userBallances[transferFrom][1]} and {userBallances[transferTo - 1][1]}"), out transferAmount) || double.Parse(userBallances[transferFrom - 1][2]) < transferAmount)
+            while (!double.TryParse(
+                       Ask(
+                           $"How mouth do you want to transefer betwine {userBallances[transferFrom][1]} and {userBallances[transferTo - 1][1]}"),
+                       out transferAmount) 
+                   || double.Parse(userBallances[transferFrom - 1][2]) < transferAmount
+                   )
             {
                 Console.WriteLine($"You can´t transfer more then {userBallances[transferFrom - 1][2]}");
             }
