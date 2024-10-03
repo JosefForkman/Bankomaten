@@ -80,6 +80,7 @@
                             {
                                 AccountsBalance(user, ballances);
                             }
+
                             break;
                         case 2:
                             menuNeedEnter = true;
@@ -87,10 +88,14 @@
                             {
                                 TransferBetweenAccounts(user, ballances);
                             }
+
                             break;
                         case 3:
                             menuNeedEnter = true;
-                            Console.WriteLine("Withdraw money");
+                            if (user != null)
+                            {
+                                WithdrawMoney(user, ballances);
+                            }
                             break;
                         case 4:
                             Console.WriteLine("sign out");
@@ -130,7 +135,6 @@
                 while (!int.TryParse(Ask("What is your pin?"), out pin))
                 {
                     Console.WriteLine("Invalid pin, try again");
-                     
                 }
 
                 /* Finds the user */
@@ -193,11 +197,13 @@
 
                 Console.WriteLine($"{i + 1} {userBallance[1]} with {userBallance[2]}{userBallance[3]}");
             }
+
             int transferFrom;
             while (
-                !int.TryParse(Ask("Chose a acount to transefer from. Only the coresponding number works"), out transferFrom)
+                !int.TryParse(Ask("Chose a acount to transefer from. Only the coresponding number works"),
+                    out transferFrom)
                 || userBallances.Length < transferFrom
-                )
+            )
             {
                 Console.WriteLine("You try to choose an account outside the given boundaries");
             }
@@ -207,9 +213,10 @@
                 !int.TryParse(Ask("Chose a acount to transefer to. Only the coresponding number works"), out transferTo)
                 || transferTo == transferFrom
                 || userBallances.Length < transferTo
-                )
+            )
             {
-                Console.WriteLine("You try to choose an account outside the given boundaries or the same as you the transfer from");
+                Console.WriteLine(
+                    "You try to choose an account outside the given boundaries or the same as you the transfer from");
 
                 for (int i = 0; i < userBallances.Length; i++)
                 {
@@ -218,21 +225,24 @@
                     Console.WriteLine($"{i + 1} {userBallance[1]} with {userBallance[2]}{userBallance[3]}");
                 }
             }
+
             double transferAmount;
             while (!double.TryParse(
                        Ask(
                            $"How mouth do you want to transefer betwine {userBallances[transferFrom][1]} and {userBallances[transferTo - 1][1]}"),
-                       out transferAmount) 
+                       out transferAmount)
                    || double.Parse(userBallances[transferFrom - 1][2]) < transferAmount
-                   )
+                  )
             {
                 Console.WriteLine($"You can´t transfer more then {userBallances[transferFrom - 1][2]}");
             }
 
             Console.WriteLine($"You transfer {transferAmount}");
 
-            userBallances[transferFrom - 1][2] = (double.Parse(userBallances[transferFrom - 1][2]) - transferAmount).ToString("#.00");
-            userBallances[transferTo - 1][2] = (double.Parse(userBallances[transferTo - 1][2]) + transferAmount).ToString("#.00");
+            userBallances[transferFrom - 1][2] =
+                (double.Parse(userBallances[transferFrom - 1][2]) - transferAmount).ToString("#.00");
+            userBallances[transferTo - 1][2] =
+                (double.Parse(userBallances[transferTo - 1][2]) + transferAmount).ToString("#.00");
             Console.WriteLine("the new ballans is");
 
             for (int i = 0; i < userBallances.Length; i++)
@@ -240,6 +250,16 @@
                 var userBallance = userBallances[i];
 
                 Console.WriteLine($"{userBallance[1]} with {userBallance[2]}{userBallance[3]}");
+            }
+        }
+
+        private static void WithdrawMoney(string[] user, string[][] ballances)
+        {
+            string[][] userBallances = GetUserBallance(user, ballances);
+
+            while (!int.TryParse(Ask("")))
+            {
+                
             }
         }
 
