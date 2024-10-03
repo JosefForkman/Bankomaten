@@ -25,15 +25,15 @@
              */
             string[][] ballances =
             [
-                [users[0][0], "lönekonto", "3456.78", "kr"],
-                [users[0][0], "sparkonto", "8912.34", "kr"],
-                [users[1][0], "lönekonto", "1234.56", "kr"],
-                [users[1][0], "sparkonto", "7890.12", "kr"],
-                [users[2][0], "sparkonto", "9876.43", "kr"],
-                [users[3][0], "lönekonto", "6543.21", "kr"],
-                [users[3][0], "sparkonto", "2109.87", "kr"],
-                [users[4][0], "lönekonto", "4321.09", "kr"],
-                [users[4][0], "sparkonto", "8765.43", "kr"]
+                [users[0][0], "lönekonto", "3456,78", "kr"],
+                [users[0][0], "sparkonto", "8912,34", "kr"],
+                [users[1][0], "lönekonto", "1234,56", "kr"],
+                [users[1][0], "sparkonto", "7890,12", "kr"],
+                [users[2][0], "sparkonto", "9876,43", "kr"],
+                [users[3][0], "lönekonto", "6543,21", "kr"],
+                [users[3][0], "sparkonto", "2109,87", "kr"],
+                [users[4][0], "lönekonto", "4321,09", "kr"],
+                [users[4][0], "sparkonto", "8765,43", "kr"]
             ];
             bool menuNeedEnter = false;
 
@@ -50,14 +50,14 @@
 
             while (true)
             {
-                ConsoleKey? key = null;
+                ConsoleKeyInfo? currentPreckey = null;
                 if (menuNeedEnter)
                 {
                     Console.WriteLine("Click enter to get to the main menu");
-                    key = Console.ReadKey(true).Key;
+                    currentPreckey = Console.ReadKey(true);
                 }
 
-                if (!menuNeedEnter || key == ConsoleKey.Enter)
+                if (!menuNeedEnter || currentPreckey?.Key == ConsoleKey.Enter)
                 {
                     Console.WriteLine("The menu\n\n");
 
@@ -83,7 +83,10 @@
                             break;
                         case 2:
                             menuNeedEnter = true;
-                            Console.WriteLine("Transfer between accounts");
+                            if (user != null)
+                            {
+                                TransferBetweenAccounts(user, ballances);
+                            }
                             break;
                         case 3:
                             menuNeedEnter = true;
@@ -127,6 +130,7 @@
                 while (!int.TryParse(Ask("What is your pin?"), out pin))
                 {
                     Console.WriteLine("Invalid pin, try again");
+                     
                 }
 
                 /* Finds the user */
@@ -163,6 +167,90 @@
         {
             Console.Clear();
 
+            string[][] userBallance = GetUserBallance(user, ballances);
+
+            foreach (var ballance in userBallance)
+            {
+                Console.WriteLine($"Account {ballance[1]} balance: \u001b[33m{ballance[2]}{ballance[3]}\u001b[0m");
+            }
+        }
+
+        private static void TransferBetweenAccounts(string[] user, string[][] ballances)
+        {
+            string[][] userBallances = GetUserBallance(user, ballances);
+
+            if (userBallances.Length < 2)
+            {
+                Console.WriteLine("You need at least two accounts to make this action.");
+                return;
+            }
+
+            Console.WriteLine("Transfer between accounts");
+
+            for (int i = 0; i < userBallances.Length; i++)
+            {
+                var userBallance = userBallances[i];
+
+                Console.WriteLine($"{i + 1} {userBallance[1]} with {userBallance[2]}{userBallance[3]}");
+            }
+            int transferFrom;
+            while (
+                !int.TryParse(Ask("Chose a acount to transefer from. Only the coresponding number works"), out transferFrom)
+                || userBallances.Length < transferFrom
+                )
+            {
+                Console.WriteLine("You try to choose an account outside the given boundaries");
+            }
+
+            int transferTo;
+            while (
+                !int.TryParse(Ask("Chose a acount to transefer to. Only the coresponding number works"), out transferTo)
+                || transferTo == transferFrom
+                || userBallances.Length < transferTo
+                )
+            {
+                Console.WriteLine("You try to choose an account outside the given boundaries or the same as you the transfer from");
+
+                for (int i = 0; i < userBallances.Length; i++)
+                {
+                    var userBallance = userBallances[i];
+
+                    Console.WriteLine($"{i + 1} {userBallance[1]} with {userBallance[2]}{userBallance[3]}");
+                }
+            }
+            double transferAmount;
+            while (!double.TryParse(
+                       Ask(
+                           $"How mouth do you want to transefer betwine {userBallances[transferFrom][1]} and {userBallances[transferTo - 1][1]}"),
+                       out transferAmount) 
+                   || double.Parse(userBallances[transferFrom - 1][2]) < transferAmount
+                   )
+            {
+                Console.WriteLine($"You can´t transfer more then {userBallances[transferFrom - 1][2]}");
+            }
+
+            Console.WriteLine($"You transfer {transferAmount}");
+
+            userBallances[transferFrom - 1][2] = (double.Parse(userBallances[transferFrom - 1][2]) - transferAmount).ToString("#.00");
+            userBallances[transferTo - 1][2] = (double.Parse(userBallances[transferTo - 1][2]) + transferAmount).ToString("#.00");
+            Console.WriteLine("the new ballans is");
+
+            for (int i = 0; i < userBallances.Length; i++)
+            {
+                var userBallance = userBallances[i];
+
+                Console.WriteLine($"{userBallance[1]} with {userBallance[2]}{userBallance[3]}");
+            }
+        }
+
+        /// <summary>
+        /// Get the user ballance.
+        /// </summary>
+        /// <param name="user"></param>
+        /// <param name="ballances"></param>
+        /// <returns>empty array if user not have any ballance</returns>
+        private static string[][] GetUserBallance(string[] user, string[][] ballances)
+        {
             string[][] userBallance = [];
 
             for (int i = 0; i < ballances.GetLength(0); i++)
@@ -177,13 +265,9 @@
             if (userBallance.Length == 0)
             {
                 Console.WriteLine("Account does not exist");
-                return;
             }
 
-            foreach (var ballance in userBallance)
-            {
-                Console.WriteLine($"Account {ballance[1]} balance: \u001b[33m{ballance[2]}{ballance[3]}\u001b[0m");
-            }
+            return userBallance;
         }
     }
 }

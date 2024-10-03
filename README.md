@@ -32,9 +32,9 @@
 
 ## 🔁 Överföring mellan konton
 
-- [ ]  Denna funktion ska köras när användaren navigerat in till alternativet "Överföring mellan konton".
-- [ ]  Användaren ska kunna välja ett konto att ta pengar från, ett konto att flytta pengarna till och sen en summa som ska flyttas mellan dessa.
-- [ ]  Denna summa ska sedan flyttas mellan dessa konton och efteråt ska användaren få se vilken summa som finns på de två konton som påverkades.
+- [x]  Denna funktion ska köras när användaren navigerat in till alternativet "Överföring mellan konton".
+- [x]  Användaren ska kunna välja ett konto att ta pengar från, ett konto att flytta pengarna till och sen en summa som ska flyttas mellan dessa.
+- [x]  Denna summa ska sedan flyttas mellan dessa konton och efteråt ska användaren få se vilken summa som finns på de två konton som påverkades.
 
 ## ⏏️ Ta ut pengar
 - [ ]  Denna funktion ska köras när användaren navigerat in till alternativet "Ta ut pengar".
@@ -60,3 +60,41 @@ Om du känner att du hinner och vill göra mer kommer här förslag på ytterlig
 
 - [ ] Skapa en tabell som går att visa alla konton och saldon för specifik användare.
 - [ ] Skriv om menyn så den ser snyggare ut. [Youtube vidio](https://www.youtube.com/watch?v=YyD1MRJY0qI) 
+- [ ] Refactorera login coden.
+  ```C#
+    private static string[]? SignIn(string[][] users)
+        {
+            Console.Clear();
+            string[]? user = null;
+
+            /* If the user is not found givs tow more trays */
+            for (int i = 0; i < 3; i++)
+            {
+                string name = Ask("What is your name?");
+                int pin;
+                while (!int.TryParse(Ask("What is your pin?"), out pin))
+                {
+                    Console.WriteLine("Invalid pin, try again");
+                }
+
+                /* Finds the user */
+                for (int k = 0; k < users.GetLength(0); k++)
+                {
+                    if (users[k][1] == name && int.Parse(users[k][2]) == pin)
+                    {
+                        // user = users[k];
+                        return users[k];
+                    }
+                }
+
+                // if (user != null)
+                // {
+                //     return user;
+                // }
+
+                Console.WriteLine("Wrong name or pin, try again");
+            }
+
+            return user;
+        }
+  ```
