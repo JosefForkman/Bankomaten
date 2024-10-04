@@ -317,8 +317,10 @@ namespace Bankomaten
 
             Console.WriteLine("whedraing the many");
 
+            double transferFromAmount = double.Parse(userBallances[transferFrom - 1][2]);
+
             userBallances[transferFrom - 1][2] =
-                (double.Parse(userBallances[transferFrom - 1][2]) - transferAmount).ToString();
+                (transferFromAmount - transferAmount).ToString("#.00");
 
             Console.WriteLine($"The new value on the acount is {userBallances[transferFrom - 1][2]}{userBallances[transferFrom - 1][3]}");
         }
