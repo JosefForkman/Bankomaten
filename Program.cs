@@ -11,34 +11,15 @@ namespace Bankomaten
              * name
              * pin
              */
-            string[][] users =
-            [
-                ["1", "Mickey", "1234"],
-                ["2", "Donald Duck", "1234"],
-                ["3", "Goofy", "1234"],
-                ["4", "Pluto", "1234"],
-                ["5", "Scar", "1234"]
-            ];
+            string[][] users = GetFromCSV("..\\..\\..\\data\\users.csv");
             /*
              * user id
              * ballances type
              * amount
              * valuta
              */
-            string[][] ballances =
-            [
-                [users[0][0], "lönekonto", "3456,78", "kr"],
-                [users[0][0], "sparkonto", "8912,34", "kr"],
-                [users[1][0], "lönekonto", "1234,56", "kr"],
-                [users[1][0], "sparkonto", "7890,12", "kr"],
-                [users[2][0], "sparkonto", "9876,43", "kr"],
-                [users[3][0], "lönekonto", "6543,21", "kr"],
-                [users[3][0], "sparkonto", "2109,87", "kr"],
-                [users[4][0], "lönekonto", "4321,09", "kr"],
-                [users[4][0], "sparkonto", "8765,43", "kr"]
-            ];
+            string[][] ballances = GetFromCSV("..\\..\\..\\data\\acounts.csv");
             bool menuNeedEnter = false;
-
             Console.WriteLine("Welcome to the Jos banken");
             string[]? user = SignIn(users);
 
@@ -98,6 +79,7 @@ namespace Bankomaten
                             {
                                 WithdrawMoney(user, ballances);
                             }
+
                             break;
                         case 4:
                             Console.WriteLine("sign out");
@@ -267,7 +249,8 @@ namespace Bankomaten
             }
 
             int transferFrom;
-            while (!int.TryParse(Ask("chose a acount to transfer from"), out transferFrom) || userBallances.Length < transferFrom || transferFrom < 1)
+            while (!int.TryParse(Ask("chose a acount to transfer from"), out transferFrom) ||
+                   userBallances.Length < transferFrom || transferFrom < 1)
             {
                 Console.WriteLine("You try to choose an account outside the given boundaries");
                 for (int i = 0; i < userBallances.Length; i++)
@@ -322,7 +305,8 @@ namespace Bankomaten
             userBallances[transferFrom - 1][2] =
                 (transferFromAmount - transferAmount).ToString("#.00");
 
-            Console.WriteLine($"The new value on the acount is {userBallances[transferFrom - 1][2]}{userBallances[transferFrom - 1][3]}");
+            Console.WriteLine(
+                $"The new value on the acount is {userBallances[transferFrom - 1][2]}{userBallances[transferFrom - 1][3]}");
         }
 
         /// <summary>
@@ -350,6 +334,22 @@ namespace Bankomaten
             }
 
             return userBallance;
+        }
+
+        /// <summary>
+        /// Fetch data from CSV file 
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
+        private static string[][] GetFromCSV(string path)
+        {
+            if (File.Exists(path))
+            {
+                var FileLines = File.ReadLines(path);
+                return File.ReadLines(path).Select(row => row.Split(".".ToCharArray())).ToArray();
+            }
+
+            return [];
         }
     }
 }
