@@ -79,7 +79,6 @@ namespace Bankomaten
                             {
                                 WithdrawMoney(user, ballances);
                             }
-
                             break;
                         case 4:
                             Console.WriteLine("sign out");
@@ -345,10 +344,17 @@ namespace Bankomaten
         {
             if (File.Exists(path))
             {
-                var FileLines = File.ReadLines(path);
-                return File.ReadLines(path).Select(row => row.Split(".".ToCharArray())).ToArray();
-            }
+                var fileLines = File.ReadLines(path).ToArray();
+                string[][] data = [];
+                
+                for (int i = 0; i < fileLines.Length; i++)
+                {
+                        Array.Resize(ref data, data.Length + 1);
+                        data[data.Length - 1] = fileLines[i].Split('.');
+                }
 
+                return data;
+            }
             return [];
         }
     }
