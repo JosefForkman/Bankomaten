@@ -28,14 +28,24 @@ namespace Bankomaten
             string[][] ballances =
             [
                 [users[0][0], "lönekonto", "3456,78", "kr"],
-                [users[0][0], "sparkonto", "8912,34", "kr"],
+                
                 [users[1][0], "lönekonto", "1234,56", "kr"],
                 [users[1][0], "sparkonto", "7890,12", "kr"],
-                [users[2][0], "sparkonto", "9876,63", "kr"],
-                [users[3][0], "lönekonto", "6543,21", "kr"],
-                [users[3][0], "sparkonto", "2109,87", "kr"],
-                [users[4][0], "lönekonto", "4321,09", "kr"],
-                [users[4][0], "sparkonto", "8765,43", "kr"]
+                
+                [users[2][0], "sparkonto", "30608,00", "kr"],
+                [users[2][0], "sparkonto", "3456,78", "kr"],
+                [users[2][0], "Hyreskonto", "7890,12", "kr"],
+                
+                [users[3][0], "lönekonto", "1234,56", "kr"],
+                [users[3][0], "sparkonto", "5678,90", "kr"],
+                [users[3][0], "Hyreskonto", "9876,34", "kr"],
+                [users[3][0], "Matbudgeten", "2134,78", "kr"],
+                
+                [users[4][0], "lönekonto", "8901,12", "kr"],
+                [users[4][0], "sparkonto", "4567,56", "kr"],
+                [users[4][0], "Hyreskonto", "6789,90", "kr"],
+                [users[4][0], "Matbudgeten", "1234,34", "kr"],
+                [users[4][0], "Nödfonden", "5678,78", "kr"]
             ];
             bool menuNeedEnter = false;
 
