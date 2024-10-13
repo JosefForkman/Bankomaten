@@ -350,6 +350,8 @@ namespace Bankomaten
 
             Console.WriteLine("whedraing the many");
 
+            double transferFromAmount = double.Parse(userBallances[transferFrom - 1][2]);
+
 
             /* Format back from decimal to string with two decimal places */
             userAccounts[transferFrom - 1][2] = (transferFromAmount - transferAmount).ToString("n2", numberFormat);
