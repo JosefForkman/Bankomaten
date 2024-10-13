@@ -123,17 +123,6 @@ namespace Bankomaten
         }
 
         /// <summary>
-        /// combines the Console.WriteLine and Console.ReadLine into one method.
-        /// </summary>
-        /// <param name="question"></param>
-        /// <returns></returns>
-        private static string Ask(string question)
-        {
-            Console.WriteLine(question);
-            return Console.ReadLine() ?? "";
-        }
-
-        /// <summary>
         /// Sign in the user.
         /// </summary>
         /// <param name="users"></param>
@@ -350,9 +339,6 @@ namespace Bankomaten
 
             Console.WriteLine("whedraing the many");
 
-            double transferFromAmount = double.Parse(userBallances[transferFrom - 1][2]);
-
-
             /* Format back from decimal to string with two decimal places */
             userAccounts[transferFrom - 1][2] = (transferFromAmount - transferAmount).ToString("n2", numberFormat);
 
@@ -384,6 +370,17 @@ namespace Bankomaten
             }
 
             return userAccounts;
+        }
+
+        /// <summary>
+        /// combines the Console.WriteLine and Console.ReadLine into one method.
+        /// </summary>
+        /// <param name="question"></param>
+        /// <returns></returns>
+        private static string Ask(string question)
+        {
+            Console.WriteLine(question);
+            return Console.ReadLine() ?? "";
         }
     }
 }
