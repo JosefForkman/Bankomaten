@@ -204,6 +204,7 @@ namespace Bankomaten
             while (
                 !int.TryParse(Ask("Chose a acount to transefer from. Only the coresponding number works"),
                     out transferFrom)
+                || transferFrom < 1
                 || userBallances.Length < transferFrom
             )
             {
@@ -213,6 +214,7 @@ namespace Bankomaten
             int transferTo;
             while (
                 !int.TryParse(Ask("Chose a acount to transefer to. Only the coresponding number works"), out transferTo)
+                || transferTo < 1
                 || transferTo == transferFrom
                 || userBallances.Length < transferTo
             )
@@ -236,8 +238,9 @@ namespace Bankomaten
             double transferAmount;
             while (!double.TryParse(
                        Ask(
-                           $"How mouth do you want to transefer betwine {userBallances[transferFrom][1]} and {userBallances[transferTo - 1][1]}"),
+                           $"How mouth do you want to transefer betwine {userBallances[transferFrom - 1][1]} and {userBallances[transferTo - 1][1]}"),
                        out transferAmount)
+                   || transferAmount < 0
                    || transferFromAmount < transferAmount
                   )
             {
@@ -290,6 +293,7 @@ namespace Bankomaten
                        Ask(
                            $"How mouth do you want to transefer from {userBallances[transferFrom - 1][1]}. You can´t tresfer more then {transferFromAmount}{userBallances[transferFrom - 1][3]}"),
                        out transferAmount)
+                   || transferAmount < 0
                    || transferFromAmount < transferAmount
                   )
             {
