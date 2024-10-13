@@ -1,105 +1,16 @@
-# Bankomaten
-## 🔒 Start av programmet och inloggning
-- [x] När programmet startar ska användaren välkomnas till banken.
-- [x] Användaren ska mata in sitt användarnummer/användarnamn (valfritt hur detta ser ut) och en pin-kod som ska avgöra vilken användare det är som vill använda bankomaten.
-- [x] Bankomaten ska ha 5 olika användare som ska kunna använda den. Det behöver inte gå att lägga till fler användare.
-- [x] Om användaren skriver in fel pinkod tre gånger ska det inte gå att försöka logga in igen utan att starta om programmet.
-
-## 🧭 Navigera som användare
-
-- [x]  När användaren lyckats logga in ska bankomaten fråga vad användaren vill göra. Det ska finnas fyra val:
-    
-```
-    1. Se dina konton och saldo
-    2. Överföring mellan konton
-    3. Ta ut pengar
-    4. Logga ut
-```
-    
-- [x]  Användaren ska kunna välja en av funktionerna ovan genom att skriva in en siffra.
-- [x]  När en funktion har kört klart ska användaren få upp texten "Klicka enter för att komma till huvudmenyn". När användaren klickat enter kommer menyn upp igen.
-- [x]  Om användaren väljer "Logga ut" ska programmet inte stängas av. Användaren ska komma tillbaka till inloggningen igen.
-- [x]  Om användaren skriver ett nummer som inte finns i menyn, eller något annat än ett nummer, ska systemet meddela att det är ett "ogiltigt val".
-
-## 🔢 Se konton och saldo
-
-- [x]  Denna funktion ska köras när användaren navigerat in till alternativet "Se dina konton och saldo".
-- [x]  Användaren ska få en utskrift av de olika konton som användaren har och hur mycket pengar det finns på dessa.
-- [x]  Konton ska kunna ha både kronor och ören.
-- [x]  Alla användare ska ha olika antal konton och alla ska ha minst ett konto.
-- [x]  Varje konto ska ha ett namn, ex. "lönekonto" eller "sparkonto".
-- [x]  Saldon för alla konton sätts vid starten av programmet (du ställer in en en summa som finns på varje konto i koden) så om programmet startas om återställs alla saldon.
-
-## 🔁 Överföring mellan konton
-
-- [x]  Denna funktion ska köras när användaren navigerat in till alternativet "Överföring mellan konton".
-- [x]  Användaren ska kunna välja ett konto att ta pengar från, ett konto att flytta pengarna till och sen en summa som ska flyttas mellan dessa.
-- [x]  Denna summa ska sedan flyttas mellan dessa konton och efteråt ska användaren få se vilken summa som finns på de två konton som påverkades.
-
-## ⏏️ Ta ut pengar
-- [x]  Denna funktion ska köras när användaren navigerat in till alternativet "Ta ut pengar".
-- [x]  Användaren ska kunna välja ett av sina konton samt en summa att ta ut.
-- [x]  Efter detta måste användaren skriva in sin pinkod för att bekräfta att de vill ta ut pengar.
-- [x]  Lägg till ett felmeddelande om användaren försöker ta ut mer pengar än vad som finns på kontot.
-- [x]  Pengarna ska sedan tas bort från det konto som valdes.
-- [x]  Sist av allt ska systemet skriva ut det nya saldot på det kontot.
-
-
-## 💡 Extrautmaningar
-
-Om du känner att du hinner och vill göra mer kommer här förslag på ytterligare funktionalitet du kan bygga in i systemet. Dessa utmaningar är helt frivilliga och inget krav!
-
-- [ ]  Lägg till funktionalitet så att användaren kan öppna nya konton.
-- [ ]  Lägg till så att användaren kan sätta in pengar.
-- [ ]  Gör så att olika konton har olika valuta, inklusive att valuta omvandlas när pengar flyttas mellan dem.
-- [ ]  Lägg till så att användaren kan göra överföringar till andra användare.
-- [ ]  Lägg till så att om användaren skriver fel pinkod tre gånger stängs inloggning för den användaren av i tre minuter istället för att programmet måste startas om.
-- [ ]  Lägg till så att saldon för alla konton för alla användare sparas mellan körningarna av programmet så att saldon inte återställs.
-
-## Extra exta utmaningar
-
-- [ ] Skapa en tabell som går att visa alla konton och saldon för specifik användare.
-- [ ] Skriv om menyn så den ser snyggare ut. [Youtube vidio](https://www.youtube.com/watch?v=YyD1MRJY0qI) 
-- [ ] Refactorera login coden.
-  ```C#
-    private static string[]? SignIn(string[][] users)
-        {
-            Console.Clear();
-            string[]? user = null;
-
-            /* If the user is not found givs tow more trays */
-            for (int i = 0; i < 3; i++)
-            {
-                string name = Ask("What is your name?");
-                int pin;
-                while (!int.TryParse(Ask("What is your pin?"), out pin))
-                {
-                    Console.WriteLine("Invalid pin, try again");
-                }
-
-                /* Finds the user */
-                for (int k = 0; k < users.GetLength(0); k++)
-                {
-                    if (users[k][1] == name && int.Parse(users[k][2]) == pin)
-                    {
-                        // user = users[k];
-                        return users[k];
-                    }
-                }
-
-                // if (user != null)
-                // {
-                //     return user;
-                // }
-
-                Console.WriteLine("Wrong name or pin, try again");
-            }
-
-            return user;
-        }
-  ```
-- [ ] kompletera med flera kommentarer.
-- [ ] Refactorera start loopen till en `do-while-loop` istället för en `while-loop`
-- [ ] README.md
-    - [ ] Kort beskrivning av projektet och hur man använder det.
-    - [ ] reflektion över projektet.
+# Cash machine
+This is a school project where I would learn .Net how to manipulate data. The task was to make a console app where you can log in as a user and then be able to do a few things such as being able to see accounts and balances, transfer between accounts and withdraw money. We had a limitation in this project. Limitation was that we were not allowed to use any kind of classes and certain methods to search through an Array a little easier.
+# How to run the application
+1. Open the project in a console
+2. Run the dotnet run command
+3. cash machine is now running
+    1. Username you can choose from Mickey, Donald Duck, Goofy, Pluto or Scar. Be sure to spell it the same way.
+    2. The pin code is the same for all users, "1234".
+4. Follow the instructions in the console
+Code structure
+Cash machinehas several different virtual pages (login, view accounts and balance, transfer between accounts and withdraw money) that are neatly separated into their own method in the [Program.cs](/Program.cs) file. There are ready-made users and bank accounts sitting at the top of the [Program.cs](/Program.cs) file. The finished users and bank accounts are like a local database saved in two jagged arrays.
+# Reflections
+There are things that I could have done better and there are things that I think I could not have solved in any other way with the limitations that I was given.
+- In some places in cash machine, the user must choose between one or more alternatives where you enter which number to choose the right alternative. I chose to do it because it was a quick fix to be able to focus more on the other things. This could be redone so that you can use the up and down arrow keys. Which I think is a better solution.
+- When you start the console, you could get a better welcome with an ASCII art that says welcome to the bank. Now it's just a text that says, "Welcome to the Jos cash machine".
+- How I save my bank accounts could be changed so that account type and money can be in two different jagged arrays. This means that money can be saved in double and I don't have to redo it from text to double and vice versa. Which makes it possible to write code that is easier to read.
