@@ -25,7 +25,7 @@ namespace Bankomaten
              * amount
              * valuta
              */
-            string[][] ballances =
+            string[][] accounts =
             [
                 [users[0][0], "lönekonto", "3456,78", "kr"],
                 
@@ -90,7 +90,7 @@ namespace Bankomaten
                             menuNeedEnter = true;
                             if (user != null)
                             {
-                                AccountsBalance(user, ballances);
+                                AccountsBalance(user, accounts);
                             }
 
                             break;
@@ -98,7 +98,7 @@ namespace Bankomaten
                             menuNeedEnter = true;
                             if (user != null)
                             {
-                                TransferBetweenAccounts(user, ballances);
+                                TransferBetweenAccounts(user, accounts);
                             }
 
                             break;
@@ -106,7 +106,7 @@ namespace Bankomaten
                             menuNeedEnter = true;
                             if (user != null)
                             {
-                                WithdrawMoney(user, ballances);
+                                WithdrawMoney(user, accounts);
                             }
                             break;
                         case 4:
