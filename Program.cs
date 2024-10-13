@@ -31,7 +31,7 @@ namespace Bankomaten
                 [users[0][0], "sparkonto", "8912,34", "kr"],
                 [users[1][0], "lönekonto", "1234,56", "kr"],
                 [users[1][0], "sparkonto", "7890,12", "kr"],
-                [users[2][0], "sparkonto", "9876,43", "kr"],
+                [users[2][0], "sparkonto", "9876,63", "kr"],
                 [users[3][0], "lönekonto", "6543,21", "kr"],
                 [users[3][0], "sparkonto", "2109,87", "kr"],
                 [users[4][0], "lönekonto", "4321,09", "kr"],
@@ -228,12 +228,17 @@ namespace Bankomaten
                 }
             }
 
+            /*  */
+            NumberFormatInfo numberFormat = new CultureInfo("sv-SE").NumberFormat;
+            double transferFromAmount = double.Parse(userBallances[transferFrom - 1][2], numberFormat);
+            double transferToAmount = double.Parse(userBallances[transferTo - 1][2], numberFormat);
+
             double transferAmount;
             while (!double.TryParse(
                        Ask(
                            $"How mouth do you want to transefer betwine {userBallances[transferFrom][1]} and {userBallances[transferTo - 1][1]}"),
                        out transferAmount)
-                   || double.Parse(userBallances[transferFrom - 1][2]) < transferAmount
+                   || transferFromAmount < transferAmount
                   )
             {
                 Console.WriteLine($"You can´t transfer more then {userBallances[transferFrom - 1][2]}");
@@ -241,10 +246,9 @@ namespace Bankomaten
 
             Console.WriteLine($"You transfer {transferAmount}");
 
-            userBallances[transferFrom - 1][2] =
-                (double.Parse(userBallances[transferFrom - 1][2]) - transferAmount).ToString("#.00");
-            userBallances[transferTo - 1][2] =
-                (double.Parse(userBallances[transferTo - 1][2]) + transferAmount).ToString("#.00");
+
+            userBallances[transferFrom - 1][2] = (transferFromAmount - transferAmount).ToString("n2", numberFormat);
+            userBallances[transferTo - 1][2] = (transferToAmount + transferAmount).ToString("n2", numberFormat);
             Console.WriteLine("the new ballans is");
 
             for (int i = 0; i < userBallances.Length; i++)
@@ -278,15 +282,18 @@ namespace Bankomaten
                 }
             }
 
+            NumberFormatInfo numberFormat = new CultureInfo("sv-SE").NumberFormat;
+            double transferFromAmount = double.Parse(userBallances[transferFrom - 1][2], numberFormat);
+
             double transferAmount;
             while (!double.TryParse(
                        Ask(
-                           $"How mouth do you want to transefer from {userBallances[transferFrom - 1][1]}. You can´t tresfer more then {userBallances[transferFrom - 1][2]}{userBallances[transferFrom - 1][3]}"),
+                           $"How mouth do you want to transefer from {userBallances[transferFrom - 1][1]}. You can´t tresfer more then {transferFromAmount}{userBallances[transferFrom - 1][3]}"),
                        out transferAmount)
-                   || double.Parse(userBallances[transferFrom - 1][2]) < transferAmount
+                   || transferFromAmount < transferAmount
                   )
             {
-                Console.WriteLine($"You can´t transfer more then {userBallances[transferFrom - 1][2]}");
+                Console.WriteLine($"You can´t transfer more then {transferFromAmount}");
             }
 
             /* If the user is not found givs tow more trays */
@@ -317,8 +324,9 @@ namespace Bankomaten
 
             Console.WriteLine("whedraing the many");
 
-            userBallances[transferFrom - 1][2] =
-                (double.Parse(userBallances[transferFrom - 1][2]) - transferAmount).ToString();
+
+
+            userBallances[transferFrom - 1][2] = (transferFromAmount - transferAmount).ToString("n2", numberFormat);
 
             Console.WriteLine($"The new value on the acount is {userBallances[transferFrom - 1][2]}{userBallances[transferFrom - 1][3]}");
         }
