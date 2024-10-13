@@ -47,6 +47,7 @@ namespace Bankomaten
                     Console.WriteLine("1. See your accounts and balance");
                     Console.WriteLine("2. Transfer between accounts");
                     Console.WriteLine("3. Withdraw money");
+                    Console.WriteLine("4. Add account");
                     Console.WriteLine("4. sign out");
                     int option;
                     while (!int.TryParse(Ask("Choose a one of the options by write the number of the option"),
@@ -81,6 +82,13 @@ namespace Bankomaten
                             }
                             break;
                         case 4:
+                            menuNeedEnter = true;
+                            if (user != null)
+                            {
+                                addAcount(user, ballances);
+                            }
+                            break;
+                        case 5:
                             Console.WriteLine("sign out");
                             menuNeedEnter = false;
                             SignOut(user);
@@ -308,6 +316,18 @@ namespace Bankomaten
                 $"The new value on the acount is {userBallances[transferFrom - 1][2]}{userBallances[transferFrom - 1][3]}");
         }
 
+        private static void addAcount(string[] user, string[][] ballances)
+        {
+            string acountName = Ask("Name of the acount");
+            string acountType = Ask("Type of the acount");
+
+            ballances.Max();
+
+            // string newAcount[] = [
+            //     ballances.
+            // ]
+        }
+
         /// <summary>
         /// Get the user ballance.
         /// </summary>
@@ -346,16 +366,33 @@ namespace Bankomaten
             {
                 var fileLines = File.ReadLines(path).ToArray();
                 string[][] data = [];
-                
+
                 for (int i = 0; i < fileLines.Length; i++)
                 {
-                        Array.Resize(ref data, data.Length + 1);
-                        data[data.Length - 1] = fileLines[i].Split('.');
+                    Array.Resize(ref data, data.Length + 1);
+                    data[data.Length - 1] = fileLines[i].Split('.');
                 }
 
                 return data;
             }
+
             return [];
+        }
+        
+        /// <summary>
+        /// This methed add string[][] to the end of the lokal file
+        /// </summary>
+        /// <param name="data"></param>
+        /// <param name="path"></param>
+        private static void PostToCSV(string[][] data, string path)
+        {
+            var fullData = GetFromCSV(path);
+
+            for (int i = 0; i < data.GetUpperBound(0); i++)
+            {
+                Array.Resize(ref fullData, fullData.Length + 1);
+                fullData[fullData.GetUpperBound(0) - 1] = data[i];
+            }
         }
     }
 }
