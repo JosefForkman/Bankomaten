@@ -100,3 +100,6 @@ Om du känner att du hinner och vill göra mer kommer här förslag på ytterlig
   ```
 - [ ] kompletera med flera kommentarer.
 - [ ] Refactorera start loopen till en `do-while-loop` istället för en `while-loop`
+- [ ] README.md
+    - [ ] Kort beskrivning av projektet och hur man använder det.
+    - [ ] reflektion över projektet.
