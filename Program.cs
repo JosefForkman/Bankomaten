@@ -179,11 +179,11 @@ namespace Bankomaten
             return user;
         }
 
-        private static void AccountsBalance(string[] user, string[][] ballances)
+        private static void AccountsBalance(string[] user, string[][] accounts)
         {
             Console.Clear();
 
-            string[][] userBallance = GetUserBallance(user, ballances);
+            string[][] userBallance = GetUserAccounts(user, accounts);
 
             foreach (var ballance in userBallance)
             {
@@ -191,11 +191,11 @@ namespace Bankomaten
             }
         }
 
-        private static void TransferBetweenAccounts(string[] user, string[][] ballances)
+        private static void TransferBetweenAccounts(string[] user, string[][] accounts)
         {
-            string[][] userBallances = GetUserBallance(user, ballances);
+            string[][] userAccounts = GetUserAccounts(user, accounts);
 
-            if (userBallances.Length < 2)
+            if (userAccounts.Length < 2)
             {
                 Console.WriteLine("You need at least two accounts to make this action.");
                 return;
@@ -203,9 +203,9 @@ namespace Bankomaten
 
             Console.WriteLine("Transfer between accounts");
 
-            for (int i = 0; i < userBallances.Length; i++)
+            for (int i = 0; i < userAccounts.Length; i++)
             {
-                var userBallance = userBallances[i];
+                var userBallance = userAccounts[i];
 
                 Console.WriteLine($"{i + 1} {userBallance[1]} with {userBallance[2]}{userBallance[3]}");
             }
@@ -215,7 +215,7 @@ namespace Bankomaten
                 !int.TryParse(Ask("Chose a acount to transefer from. Only the coresponding number works"),
                     out transferFrom)
                 || transferFrom < 1
-                || userBallances.Length < transferFrom
+                || userAccounts.Length < transferFrom
             )
             {
                 Console.WriteLine("You try to choose an account outside the given boundaries");
@@ -226,15 +226,15 @@ namespace Bankomaten
                 !int.TryParse(Ask("Chose a acount to transefer to. Only the coresponding number works"), out transferTo)
                 || transferTo < 1
                 || transferTo == transferFrom
-                || userBallances.Length < transferTo
+                || userAccounts.Length < transferTo
             )
             {
                 Console.WriteLine(
                     "You try to choose an account outside the given boundaries or the same as you the transfer from");
 
-                for (int i = 0; i < userBallances.Length; i++)
+                for (int i = 0; i < userAccounts.Length; i++)
                 {
-                    var userBallance = userBallances[i];
+                    var userBallance = userAccounts[i];
 
                     Console.WriteLine($"{i + 1} {userBallance[1]} with {userBallance[2]}{userBallance[3]}");
                 }
@@ -242,66 +242,66 @@ namespace Bankomaten
 
             /*  */
             NumberFormatInfo numberFormat = new CultureInfo("sv-SE").NumberFormat;
-            double transferFromAmount = double.Parse(userBallances[transferFrom - 1][2], numberFormat);
-            double transferToAmount = double.Parse(userBallances[transferTo - 1][2], numberFormat);
+            double transferFromAmount = double.Parse(userAccounts[transferFrom - 1][2], numberFormat);
+            double transferToAmount = double.Parse(userAccounts[transferTo - 1][2], numberFormat);
 
             double transferAmount;
             while (!double.TryParse(
                        Ask(
-                           $"How mouth do you want to transefer betwine {userBallances[transferFrom - 1][1]} and {userBallances[transferTo - 1][1]}"),
+                           $"How mouth do you want to transefer betwine {userAccounts[transferFrom - 1][1]} and {userAccounts[transferTo - 1][1]}"),
                        out transferAmount)
                    || transferAmount < 0
                    || transferFromAmount < transferAmount
                   )
             {
-                Console.WriteLine($"You can´t transfer more then {userBallances[transferFrom - 1][2]}");
+                Console.WriteLine($"You can´t transfer more then {userAccounts[transferFrom - 1][2]}");
             }
 
             Console.WriteLine($"You transfer {transferAmount}");
 
 
-            userBallances[transferFrom - 1][2] = (transferFromAmount - transferAmount).ToString("n2", numberFormat);
-            userBallances[transferTo - 1][2] = (transferToAmount + transferAmount).ToString("n2", numberFormat);
+            userAccounts[transferFrom - 1][2] = (transferFromAmount - transferAmount).ToString("n2", numberFormat);
+            userAccounts[transferTo - 1][2] = (transferToAmount + transferAmount).ToString("n2", numberFormat);
             Console.WriteLine("the new ballans is");
 
-            for (int i = 0; i < userBallances.Length; i++)
+            for (int i = 0; i < userAccounts.Length; i++)
             {
-                var userBallance = userBallances[i];
+                var userBallance = userAccounts[i];
 
                 Console.WriteLine($"{userBallance[1]} with {userBallance[2]}{userBallance[3]}");
             }
         }
 
-        private static void WithdrawMoney(string[] user, string[][] ballances)
+        private static void WithdrawMoney(string[] user, string[][] accounts)
         {
-            string[][] userBallances = GetUserBallance(user, ballances);
+            string[][] userAccounts = GetUserAccounts(user, accounts);
 
-            for (int i = 0; i < userBallances.Length; i++)
+            for (int i = 0; i < userAccounts.Length; i++)
             {
-                var userBallance = userBallances[i];
+                var userAccount = userAccounts[i];
 
-                Console.WriteLine($"{i + 1} {userBallance[1]} with {userBallance[2]}{userBallance[3]}");
+                Console.WriteLine($"{i + 1} {userAccount[1]} with {userAccount[2]}{userAccount[3]}");
             }
 
             int transferFrom;
-            while (!int.TryParse(Ask("chose a acount to transfer from"), out transferFrom) || userBallances.Length < transferFrom || transferFrom < 1)
+            while (!int.TryParse(Ask("chose a acount to transfer from"), out transferFrom) || userAccounts.Length < transferFrom || transferFrom < 1)
             {
                 Console.WriteLine("You try to choose an account outside the given boundaries");
-                for (int i = 0; i < userBallances.Length; i++)
+                for (int i = 0; i < userAccounts.Length; i++)
                 {
-                    var userBallance = userBallances[i];
+                    var userBallance = userAccounts[i];
 
                     Console.WriteLine($"{i + 1} {userBallance[1]} with {userBallance[2]}{userBallance[3]}");
                 }
             }
 
             NumberFormatInfo numberFormat = new CultureInfo("sv-SE").NumberFormat;
-            double transferFromAmount = double.Parse(userBallances[transferFrom - 1][2], numberFormat);
+            double transferFromAmount = double.Parse(userAccounts[transferFrom - 1][2], numberFormat);
 
             double transferAmount;
             while (!double.TryParse(
                        Ask(
-                           $"How mouth do you want to transefer from {userBallances[transferFrom - 1][1]}. You can´t tresfer more then {transferFromAmount}{userBallances[transferFrom - 1][3]}"),
+                           $"How mouth do you want to transefer from {userAccounts[transferFrom - 1][1]}. You can´t tresfer more then {transferFromAmount}{userAccounts[transferFrom - 1][3]}"),
                        out transferAmount)
                    || transferAmount < 0
                    || transferFromAmount < transferAmount
@@ -340,36 +340,36 @@ namespace Bankomaten
 
 
 
-            userBallances[transferFrom - 1][2] = (transferFromAmount - transferAmount).ToString("n2", numberFormat);
+            userAccounts[transferFrom - 1][2] = (transferFromAmount - transferAmount).ToString("n2", numberFormat);
 
-            Console.WriteLine($"The new value on the acount is {userBallances[transferFrom - 1][2]}{userBallances[transferFrom - 1][3]}");
+            Console.WriteLine($"The new value on the acount is {userAccounts[transferFrom - 1][2]}{userAccounts[transferFrom - 1][3]}");
         }
 
         /// <summary>
         /// Get the user ballance.
         /// </summary>
         /// <param name="user"></param>
-        /// <param name="ballances"></param>
+        /// <param name="accounts"></param>
         /// <returns>empty array if user not have any ballance</returns>
-        private static string[][] GetUserBallance(string[] user, string[][] ballances)
+        private static string[][] GetUserAccounts(string[] user, string[][] accounts)
         {
-            string[][] userBallance = [];
+            string[][] userAccounts = [];
 
-            for (int i = 0; i < ballances.GetLength(0); i++)
+            for (int i = 0; i < accounts.GetLength(0); i++)
             {
-                if (int.Parse(ballances[i][0]) == int.Parse(user[0]))
+                if (int.Parse(accounts[i][0]) == int.Parse(user[0]))
                 {
-                    Array.Resize(ref userBallance, userBallance.Length + 1);
-                    userBallance[userBallance.Length - 1] = ballances[i];
+                    Array.Resize(ref userAccounts, userAccounts.Length + 1);
+                    userAccounts[userAccounts.Length - 1] = accounts[i];
                 }
             }
 
-            if (userBallance.Length == 0)
+            if (userAccounts.Length == 0)
             {
                 Console.WriteLine("Account does not exist");
             }
 
-            return userBallance;
+            return userAccounts;
         }
     }
 }
