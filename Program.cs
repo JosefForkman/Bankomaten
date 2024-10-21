@@ -62,6 +62,12 @@ namespace Bankomaten
 
             while (true)
             {
+                /* If user is not sign in break out the loop */
+                if (user == null)
+                {
+                    return;
+                }
+
                 ConsoleKeyInfo? currentPreckey = null;
                 if (menuNeedEnter)
                 {
@@ -88,26 +94,16 @@ namespace Bankomaten
                     {
                         case 1:
                             menuNeedEnter = true;
-                            if (user != null)
-                            {
-                                AccountsBalance(user, accounts);
-                            }
+                            AccountsBalance(user, accounts);
 
                             break;
                         case 2:
                             menuNeedEnter = true;
-                            if (user != null)
-                            {
-                                TransferBetweenAccounts(user, accounts);
-                            }
-
+                            TransferBetweenAccounts(user, accounts);
                             break;
                         case 3:
                             menuNeedEnter = true;
-                            if (user != null)
-                            {
-                                WithdrawMoney(user, accounts);
-                            }
+                            WithdrawMoney(user, accounts);
                             break;
                         case 4:
                             Console.WriteLine("sign out");
@@ -151,6 +147,7 @@ namespace Bankomaten
                     }
                 }
 
+                /* if user exist return the user */
                 if (user != null)
                 {
                     return user;
@@ -178,6 +175,7 @@ namespace Bankomaten
                 Console.WriteLine($"Account {ballance[1]} balance: \u001b[33m{ballance[2]}{ballance[3]}\u001b[0m");
             }
         }
+
         /// <summary>
         /// Transfer between accounts.
         /// </summary>
@@ -215,7 +213,8 @@ namespace Bankomaten
 
             int transferTo;
             while (
-                !int.TryParse(Ask("Chose a acount to transefer to. Only the coresponding number works"), out transferTo)
+                !int.TryParse(Ask("Chose a acount to transefer to. Only the coresponding number works"),
+                    out transferTo)
                 || transferTo < 1
                 || transferTo == transferFrom
                 || userAccounts.Length < transferTo
@@ -284,8 +283,8 @@ namespace Bankomaten
 
             int transferFrom;
             while (!int.TryParse(Ask("chose a acount to transfer from"), out transferFrom)
-                || userAccounts.Length < transferFrom
-                || transferFrom < 1)
+                   || userAccounts.Length < transferFrom
+                   || transferFrom < 1)
             {
                 Console.WriteLine("You try to choose an account outside the given boundaries");
                 for (int i = 0; i < userAccounts.Length; i++)
@@ -342,7 +341,8 @@ namespace Bankomaten
             /* Format back from decimal to string with two decimal places */
             userAccounts[transferFrom - 1][2] = (transferFromAmount - transferAmount).ToString("n2", numberFormat);
 
-            Console.WriteLine($"The new value on the acount is {userAccounts[transferFrom - 1][2]}{userAccounts[transferFrom - 1][3]}");
+            Console.WriteLine(
+                $"The new value on the acount is {userAccounts[transferFrom - 1][2]}{userAccounts[transferFrom - 1][3]}");
         }
 
         /// <summary>
