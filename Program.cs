@@ -25,28 +25,47 @@ namespace Bankomaten
              * amount
              * valuta
              */
-            string[][] accounts =
-            [
-                [users[0][0], "lönekonto", "3456,78", "kr"],
+            string[,][][] accounts =
+            {
+                {
+                    [
+                        ["lönekonto", "3456,78", "kr"],
+                    ],
+                },
+                {
+                    [
+                        ["lönekonto", "1234,56", "kr"],
+                        ["sparkonto", "7890,12", "kr"],
+                    ]
+                },
+                {
+                    [
+                        ["sparkonto", "30608,00", "kr"],
+                        ["sparkonto", "3456,78", "kr"],
+                        ["Hyreskonto", "7890,12", "kr"],
+                    ]
+                },
+                {
+                    [
+                        ["lönekonto", "1234,56", "kr"],
+                        ["sparkonto", "5678,90", "kr"],
+                        ["Hyreskonto", "9876,34", "kr"],
+                        ["Matbudgeten", "2134,78", "kr"],
+                    ]
+                },
+                {
+                    [
+                        ["lönekonto", "8901,12", "kr"],
+                        ["sparkonto", "4567,56", "kr"],
+                        ["Hyreskonto", "6789,90", "kr"],
+                        ["Matbudgeten", "1234,34", "kr"],
+                        ["Nödfonden", "5678,78", "kr"]
+                    ]
+                }
+            };
 
-                [users[1][0], "lönekonto", "1234,56", "kr"],
-                [users[1][0], "sparkonto", "7890,12", "kr"],
 
-                [users[2][0], "sparkonto", "30608,00", "kr"],
-                [users[2][0], "sparkonto", "3456,78", "kr"],
-                [users[2][0], "Hyreskonto", "7890,12", "kr"],
 
-                [users[3][0], "lönekonto", "1234,56", "kr"],
-                [users[3][0], "sparkonto", "5678,90", "kr"],
-                [users[3][0], "Hyreskonto", "9876,34", "kr"],
-                [users[3][0], "Matbudgeten", "2134,78", "kr"],
-
-                [users[4][0], "lönekonto", "8901,12", "kr"],
-                [users[4][0], "sparkonto", "4567,56", "kr"],
-                [users[4][0], "Hyreskonto", "6789,90", "kr"],
-                [users[4][0], "Matbudgeten", "1234,34", "kr"],
-                [users[4][0], "Nödfonden", "5678,78", "kr"]
-            ];
             bool menuNeedEnter = false;
 
             Console.WriteLine("Welcome to the Jos banken");
@@ -62,6 +81,12 @@ namespace Bankomaten
 
             while (true)
             {
+                /* If user is not sign in break out the loop */
+                if (user == null)
+                {
+                    return;
+                }
+
                 ConsoleKeyInfo? currentPreckey = null;
                 if (menuNeedEnter)
                 {
@@ -84,30 +109,21 @@ namespace Bankomaten
                         Console.WriteLine("invalid choice");
                     }
 
+                    // Console.Clear();
                     switch (option)
                     {
                         case 1:
                             menuNeedEnter = true;
-                            if (user != null)
-                            {
-                                AccountsBalance(user, accounts);
-                            }
+                            AccountsBalance(user, accounts);
 
                             break;
                         case 2:
                             menuNeedEnter = true;
-                            if (user != null)
-                            {
-                                TransferBetweenAccounts(user, accounts);
-                            }
-
+                            TransferBetweenAccounts(user, accounts);
                             break;
                         case 3:
                             menuNeedEnter = true;
-                            if (user != null)
-                            {
-                                WithdrawMoney(user, accounts);
-                            }
+                            WithdrawMoney(user, accounts);
                             break;
                         case 4:
                             Console.WriteLine("sign out");
@@ -129,7 +145,7 @@ namespace Bankomaten
         /// <returns>Returns a user if the user uses the correct credentials otherwise null.</returns>
         private static string[]? SignIn(string[][] users)
         {
-            Console.Clear();
+            // Console.Clear();
             string[]? user = null;
 
             /* If the user is not found givs tow more trays */
@@ -151,6 +167,7 @@ namespace Bankomaten
                     }
                 }
 
+                /* if user exist return the user */
                 if (user != null)
                 {
                     return user;
@@ -167,23 +184,25 @@ namespace Bankomaten
         /// </summary>
         /// <param name="user"></param>
         /// <param name="accounts"></param>
-        private static void AccountsBalance(string[] user, string[][] accounts)
+        private static void AccountsBalance(string[] user, string[,][][] accounts)
         {
             Console.Clear();
 
-            string[][] userBallance = GetUserAccounts(user, accounts);
+            string[][] userAccounts = GetUserAccounts(user, accounts);
 
-            foreach (var ballance in userBallance)
+            foreach (var userAccount in userAccounts)
             {
-                Console.WriteLine($"Account {ballance[1]} balance: \u001b[33m{ballance[2]}{ballance[3]}\u001b[0m");
+                Console.WriteLine(
+                    $"Account {userAccount[0]} balance: \u001b[33m{userAccount[1]}{userAccount[2]}\u001b[0m");
             }
         }
+
         /// <summary>
         /// Transfer between accounts.
         /// </summary>
         /// <param name="user"></param>
         /// <param name="accounts"></param>
-        private static void TransferBetweenAccounts(string[] user, string[][] accounts)
+        private static void TransferBetweenAccounts(string[] user, string[,][][] accounts)
         {
             string[][] userAccounts = GetUserAccounts(user, accounts);
 
@@ -199,7 +218,7 @@ namespace Bankomaten
             {
                 var userBallance = userAccounts[i];
 
-                Console.WriteLine($"{i + 1} {userBallance[1]} with {userBallance[2]}{userBallance[3]}");
+                Console.WriteLine($"{i + 1} {userBallance[0]} with {userBallance[1]}{userBallance[2]}");
             }
 
             int transferFrom;
@@ -215,7 +234,8 @@ namespace Bankomaten
 
             int transferTo;
             while (
-                !int.TryParse(Ask("Chose a acount to transefer to. Only the coresponding number works"), out transferTo)
+                !int.TryParse(Ask("Chose a acount to transefer to. Only the coresponding number works"),
+                    out transferTo)
                 || transferTo < 1
                 || transferTo == transferFrom
                 || userAccounts.Length < transferTo
@@ -228,14 +248,14 @@ namespace Bankomaten
                 {
                     var userBallance = userAccounts[i];
 
-                    Console.WriteLine($"{i + 1} {userBallance[1]} with {userBallance[2]}{userBallance[3]}");
+                    Console.WriteLine($"{i + 1} {userBallance[0]} with {userBallance[1]}{userBallance[2]}");
                 }
             }
 
             /* formats the number into a Swedish format  */
             NumberFormatInfo numberFormat = new CultureInfo("sv-SE").NumberFormat;
-            double transferFromAmount = double.Parse(userAccounts[transferFrom - 1][2], numberFormat);
-            double transferToAmount = double.Parse(userAccounts[transferTo - 1][2], numberFormat);
+            double transferFromAmount = double.Parse(userAccounts[transferFrom - 1][1], numberFormat);
+            double transferToAmount = double.Parse(userAccounts[transferTo - 1][1], numberFormat);
 
             double transferAmount;
             while (!double.TryParse(
@@ -246,15 +266,15 @@ namespace Bankomaten
                    || transferFromAmount < transferAmount
                   )
             {
-                Console.WriteLine($"You can´t transfer more then {userAccounts[transferFrom - 1][2]}");
+                Console.WriteLine($"You can´t transfer more then {userAccounts[transferFrom - 1][1]}");
             }
 
             Console.WriteLine($"You transfer {transferAmount}");
 
 
             /* Format back from decimal to string with two decimal places */
-            userAccounts[transferFrom - 1][2] = (transferFromAmount - transferAmount).ToString("n2", numberFormat);
-            userAccounts[transferTo - 1][2] = (transferToAmount + transferAmount).ToString("n2", numberFormat);
+            userAccounts[transferFrom - 1][1] = (transferFromAmount - transferAmount).ToString("n2", numberFormat);
+            userAccounts[transferTo - 1][1] = (transferToAmount + transferAmount).ToString("n2", numberFormat);
 
             Console.WriteLine("the new ballans is");
 
@@ -271,7 +291,7 @@ namespace Bankomaten
         /// </summary>
         /// <param name="user"></param>
         /// <param name="accounts"></param>
-        private static void WithdrawMoney(string[] user, string[][] accounts)
+        private static void WithdrawMoney(string[] user, string[,][][] accounts)
         {
             string[][] userAccounts = GetUserAccounts(user, accounts);
 
@@ -279,30 +299,30 @@ namespace Bankomaten
             {
                 var userAccount = userAccounts[i];
 
-                Console.WriteLine($"{i + 1} {userAccount[1]} with {userAccount[2]}{userAccount[3]}");
+                Console.WriteLine($"{i + 1} {userAccount[0]} with {userAccount[1]}{userAccount[2]}");
             }
 
             int transferFrom;
             while (!int.TryParse(Ask("chose a acount to transfer from"), out transferFrom)
-                || userAccounts.Length < transferFrom
-                || transferFrom < 1)
+                   || userAccounts.Length < transferFrom
+                   || transferFrom < 1)
             {
                 Console.WriteLine("You try to choose an account outside the given boundaries");
                 for (int i = 0; i < userAccounts.Length; i++)
                 {
                     var userBallance = userAccounts[i];
 
-                    Console.WriteLine($"{i + 1} {userBallance[1]} with {userBallance[2]}{userBallance[3]}");
+                    Console.WriteLine($"{i + 1} {userBallance[0]} with {userBallance[1]}{userBallance[2]}");
                 }
             }
 
             NumberFormatInfo numberFormat = new CultureInfo("sv-SE").NumberFormat;
-            double transferFromAmount = double.Parse(userAccounts[transferFrom - 1][2], numberFormat);
+            double transferFromAmount = double.Parse(userAccounts[transferFrom - 1][1], numberFormat);
 
             double transferAmount;
             while (!double.TryParse(
                        Ask(
-                           $"How mouth do you want to transefer from {userAccounts[transferFrom - 1][1]}. You can´t tresfer more then {transferFromAmount}{userAccounts[transferFrom - 1][3]}"),
+                           $"How mouth do you want to transefer from {userAccounts[transferFrom - 1][1]}. You can´t tresfer more then {transferFromAmount}{userAccounts[transferFrom - 1][2]}"),
                        out transferAmount)
                    || transferAmount < 0
                    || transferFromAmount < transferAmount
@@ -342,7 +362,8 @@ namespace Bankomaten
             /* Format back from decimal to string with two decimal places */
             userAccounts[transferFrom - 1][2] = (transferFromAmount - transferAmount).ToString("n2", numberFormat);
 
-            Console.WriteLine($"The new value on the acount is {userAccounts[transferFrom - 1][2]}{userAccounts[transferFrom - 1][3]}");
+            Console.WriteLine(
+                $"The new value on the acount is {userAccounts[transferFrom - 1][1]}{userAccounts[transferFrom - 1][2]}");
         }
 
         /// <summary>
@@ -350,19 +371,12 @@ namespace Bankomaten
         /// </summary>
         /// <param name="user"></param>
         /// <param name="accounts"></param>
-        /// <returns>empty array if user not have any ballance</returns>
-        private static string[][] GetUserAccounts(string[] user, string[][] accounts)
+        /// <returns>empty array if user not have any accounts</returns>
+        private static string[][] GetUserAccounts(string[] user, string[,][][] accounts)
         {
-            string[][] userAccounts = [];
+            int userId = int.Parse(user[0]) - 1;
 
-            for (int i = 0; i < accounts.GetLength(0); i++)
-            {
-                if (int.Parse(accounts[i][0]) == int.Parse(user[0]))
-                {
-                    Array.Resize(ref userAccounts, userAccounts.Length + 1);
-                    userAccounts[userAccounts.Length - 1] = accounts[i];
-                }
-            }
+            var userAccounts = accounts[userId, 0];
 
             if (userAccounts.Length == 0)
             {
